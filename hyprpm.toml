@@ -1,0 +1,12 @@
+[repository]
+name = "hypr-hud-frame"
+authors = ["Spider's LAB"]
+
+[hud-frame]
+description = "Cyberpunk HUD window decorations with chamfered corners, neon glow, and decorative elements"
+output = "hypr-hud-frame.so"
+build = [
+    "cmake -B build -DCMAKE_BUILD_TYPE=Release",
+    "cmake --build build -j`nproc`",
+    "cp build/hypr-hud-frame.so ."
+]
