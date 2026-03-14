@@ -158,14 +158,6 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle) {
     addDecoToAllWindows();
     int decoCount = static_cast<int>(g_decorations.size());
 
-    HyprlandAPI::addNotification(handle,
-        "[HUD] t=" + std::to_string(winTotal) +
-        " map=" + std::to_string(winMapped) +
-        " excl=" + std::to_string(winExcluded) +
-        " deco=" + std::to_string(decoCount) +
-        " skip=" + skippedClasses,
-        CHyprColor(0.38f, 0.89f, 1.0f, 1.0f), 10000);
-
     return {"hypr-hud-frame", "Cyberpunk HUD window decorations", "Spider's LAB", "0.1.0"};
 }
 

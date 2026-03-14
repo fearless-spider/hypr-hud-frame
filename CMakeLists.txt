@@ -40,6 +40,7 @@ target_link_libraries(hypr-hud-frame PRIVATE
     OpenGL::GL
 )
 
+
 find_package(OpenGL REQUIRED)
 
 install(TARGETS hypr-hud-frame

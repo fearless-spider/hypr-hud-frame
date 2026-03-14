@@ -15,6 +15,7 @@ class CHudFrameDecoration : public IHyprWindowDecoration {
     virtual eDecorationType            getDecorationType() override;
     virtual void                       updateWindow(PHLWINDOW) override;
     virtual void                       damageEntire() override;
+    virtual bool                       onInputOnDeco(const eInputType, const Vector2D&, std::any = {}) override;
     virtual eDecorationLayer           getDecorationLayer() override;
     virtual uint64_t                   getDecorationFlags() override;
     virtual std::string                getDisplayName() override;

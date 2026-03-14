@@ -289,3 +289,7 @@ uint64_t CHudFrameDecoration::getDecorationFlags() {
 std::string CHudFrameDecoration::getDisplayName() {
     return "HUD Frame";
 }
+
+bool CHudFrameDecoration::onInputOnDeco(const eInputType, const Vector2D&, std::any) {
+    return false;
+}
