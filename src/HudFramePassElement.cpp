@@ -4,6 +4,8 @@
 #include <hyprland/src/render/Renderer.hpp>
 #include <cstdio>
 
+using Render::GL::g_pHyprOpenGL;
+
 // ─── Shader compilation ────────────────────────────────────────────────
 
 GLuint CHudFramePassElement::compileShader(GLenum type, const char* src) {
@@ -120,18 +122,19 @@ void CHudFramePassElement::destroyShader() {
 
 CHudFramePassElement::CHudFramePassElement(const SHudFrameData& data) : m_data(data) {}
 
-void CHudFramePassElement::draw(const CRegion& damage) {
+std::vector<UP<IPassElement>> CHudFramePassElement::draw() {
     // Lazy init — need GL context which isn't available at PLUGIN_INIT time
     if (!s_initialized) {
         if (!initShader())
-            return;
+            return {};
     }
 
     if (!s_program)
-        return;
+        return {};
 
+    const auto& damage = g_pHyprRenderer->m_renderData.damage;
     if (damage.empty())
-        return;
+        return {};
 
     const auto& box   = m_data.decoBox;
     const auto& cfg   = m_data.config;
@@ -145,7 +148,7 @@ void CHudFramePassElement::draw(const CRegion& damage) {
     glUseProgram(s_program);
 
     // Projection matrix from Hyprland's render state
-    auto projMatrix = g_pHyprOpenGL->m_renderData.projection.getMatrix();
+    auto projMatrix = g_pHyprRenderer->m_renderData.targetProjection.getMatrix();
     glUniformMatrix3fv(s_locProj, 1, GL_FALSE, projMatrix.data());
 
     // Vertex shader: map unit quad to decoration box
@@ -207,6 +210,8 @@ void CHudFramePassElement::draw(const CRegion& damage) {
 
     // Restore previous program
     glUseProgram(prevProgram);
+
+    return {};
 }
 
 bool CHudFramePassElement::needsLiveBlur() {

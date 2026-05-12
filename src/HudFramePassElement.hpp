@@ -20,10 +20,11 @@ class CHudFramePassElement : public IPassElement {
     explicit CHudFramePassElement(const SHudFrameData& data);
     virtual ~CHudFramePassElement() = default;
 
-    virtual void                draw(const CRegion& damage) override;
+    virtual std::vector<UP<IPassElement>> draw() override;
     virtual bool                needsLiveBlur() override;
     virtual bool                needsPrecomputeBlur() override;
     virtual const char*         passName() override;
+    virtual ePassElementType    type() override { return EK_CUSTOM; }
     virtual std::optional<CBox> boundingBox() override;
     virtual bool                disableSimplification() override;
 
